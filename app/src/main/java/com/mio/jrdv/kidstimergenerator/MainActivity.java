@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.ActionBar;
@@ -164,6 +165,12 @@ public class MainActivity extends AppCompatActivity {
                     options.inSampleSize = 4;
                     Bitmap bitmap2=BitmapFactory.decodeFile(Fotokid1path,options);
 
+                    //VAMOS A CORREGIR LA ORIENTACION:
+
+
+                    bitmap2=rotateImage(bitmap2,90);
+
+
                     MiFotoHijo1.setImageBitmap(Bitmap.createScaledBitmap(bitmap2,200,200,true));
 
                     //lo hacemos animado mejo!!
@@ -192,6 +199,12 @@ public class MainActivity extends AppCompatActivity {
                     options.inSampleSize = 4;
                     Bitmap bitmap2=BitmapFactory.decodeFile(Fotokid2path,options);
 
+                    //VAMOS A CORREGIR LA ORIENTACION:
+
+
+                    bitmap2=rotateImage(bitmap2,90);
+
+
                     MiFotoHijo2.setImageBitmap(Bitmap.createScaledBitmap(bitmap2,200,200,true));
 
                     //lo hacemos animado mejo!!
@@ -218,6 +231,12 @@ public class MainActivity extends AppCompatActivity {
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inSampleSize = 4;
                     Bitmap bitmap2=BitmapFactory.decodeFile(Fotokid3path,options);
+
+                    //VAMOS A CORREGIR LA ORIENTACION:
+
+
+                    bitmap2=rotateImage(bitmap2,90);
+
 
                     MiFotoHijo3.setImageBitmap(Bitmap.createScaledBitmap(bitmap2,200,200,true));
 
@@ -474,6 +493,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public static Bitmap rotateImage(Bitmap source, float angle) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix,
+                true);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -501,6 +527,13 @@ public class MainActivity extends AppCompatActivity {
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 4;
                 Bitmap bitmap2=BitmapFactory.decodeFile(imageFiles.get(0).getPath(),options);
+
+
+
+                //VAMOS A CORREGIR LA ORIENTACION:
+
+
+                bitmap2=rotateImage(bitmap2,90);
 
 
                 switch (TAGCameraKid){
@@ -543,6 +576,26 @@ public class MainActivity extends AppCompatActivity {
 
 
                         break;
+
+                    default:
+                        //en S4 no pilla el TAGCameraKid porque se gira sola la camara..asi q lo ponemos en el 1
+
+                        // MiFotoHijo.setImageBitmap(bitmap); //da errores de memoria ,asi que ponog una mas pequeña...
+                        MiFotoHijo1.setImageBitmap(Bitmap.createScaledBitmap(bitmap2,200,200,true));
+                        //guardamos el path en nuestra property
+                        FotoPathkid1 = (imageFiles.get(0).getPath());
+                        FotoYatomadakid1 = true;
+                        //  guardamos el path en pref
+
+                        Myapplication.preferences.edit().putString(Myapplication.PREF_FOTO_PATH_KID1,FotoPathkid1).commit();
+
+
+
+
+
+
+                        break;
+
 
 
                 }
