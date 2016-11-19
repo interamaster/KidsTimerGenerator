@@ -9,6 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@android:color/white"
     tools:context="com.mio.jrdv.kidstimergenerator.MainActivity">
 
 
@@ -17,7 +18,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:singleLine="true"
-        android:textColor="#ffffff"
+        android:textColor="#000000"
         android:textColorHint="#cccccc"
         android:id="@+id/txtname_check_children"
         android:hint="Choose Kid or enter Kid Name"
@@ -28,69 +29,6 @@
         android:layout_below="@+id/linearLayout"
         android:layout_alignParentStart="true" />
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/txtname_check_children"
-        android:id="@+id/linearLayoutminutos"
-        android:layout_marginTop="5dp">
-
-        <com.github.siyamed.shapeimageview.CircularImageView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="100dp"
-            android:id="@+id/min15pass"
-            android:layout_gravity="center"
-            app:siBorderWidth="6dp"
-            app:siBorderColor="@android:color/darker_gray"
-            android:scaleType="fitXY"
-            android:background="@drawable/parents_ico"
-            android:transitionName="Hijotransition"
-            android:onClick="generar15minCode"
-            />
-        <com.github.siyamed.shapeimageview.CircularImageView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="100dp"
-            android:id="@+id/min30pass"
-            android:layout_gravity="center"
-            app:siBorderWidth="6dp"
-            app:siBorderColor="@android:color/darker_gray"
-            android:scaleType="fitXY"
-            android:background="@drawable/parents_ico"
-            android:transitionName="Hijotransition"
-            android:onClick="generar30minCode"
-            />
-        <com.github.siyamed.shapeimageview.CircularImageView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="100dp"
-            android:id="@+id/hora1pass"
-            android:layout_gravity="center"
-            app:siBorderWidth="6dp"
-            app:siBorderColor="@android:color/darker_gray"
-            android:scaleType="fitXY"
-            android:background="@drawable/parents_ico"
-            android:transitionName="Hijotransition"
-            android:onClick="generar1HORACode"
-            />
-        <com.github.siyamed.shapeimageview.CircularImageView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="100dp"
-            android:id="@+id/hora3pass"
-            android:layout_gravity="center"
-            app:siBorderWidth="6dp"
-            app:siBorderColor="@android:color/darker_gray"
-            android:scaleType="fitXY"
-            android:background="@drawable/parents_ico"
-            android:transitionName="Hijotransition"
-            android:onClick="generar3HORASCode"
-            />
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -155,6 +93,70 @@
         android:gravity="center_horizontal"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayoutminutos"
+        android:background="@android:color/transparent"
+        android:layout_below="@+id/txtname_check_children"
+        android:layout_alignParentStart="true">
+
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="100dp"
+            android:id="@+id/min15pass"
+            android:layout_gravity="center"
+            app:siBorderWidth="6dp"
+            app:siBorderColor="@android:color/darker_gray"
+            android:scaleType="fitXY"
+            android:background="@drawable/icon_15_minutes"
+            android:transitionName="Hijotransition"
+            android:onClick="generar15minCode"
+            />
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="100dp"
+            android:id="@+id/min30pass"
+            android:layout_gravity="center"
+            app:siBorderWidth="6dp"
+            app:siBorderColor="@android:color/darker_gray"
+            android:scaleType="fitXY"
+            android:background="@drawable/icon_30_minutes"
+            android:transitionName="Hijotransition"
+            android:onClick="generar30minCode"
+            />
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="100dp"
+            android:id="@+id/hora1pass"
+            android:layout_gravity="center"
+            app:siBorderWidth="6dp"
+            app:siBorderColor="@android:color/darker_gray"
+            android:scaleType="fitXY"
+            android:background="@drawable/icon_45_minutes"
+            android:transitionName="Hijotransition"
+            android:onClick="generar1HORACode"
+            />
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="100dp"
+            android:id="@+id/hora3pass"
+            android:layout_gravity="center"
+            app:siBorderWidth="6dp"
+            app:siBorderColor="@android:color/darker_gray"
+            android:scaleType="fitXY"
+            android:background="@drawable/icon_3_horas"
+            android:transitionName="Hijotransition"
+            android:onClick="generar3HORASCode"
+            />
+
+    </LinearLayout>
 
 
 </RelativeLayout>

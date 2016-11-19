@@ -17,8 +17,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.util.Calendar;
 import java.util.List;
 
 import pl.aprilapps.easyphotopicker.DefaultCallback;
@@ -42,12 +45,25 @@ public class MainActivity extends AppCompatActivity {
 
     private String TAGCameraKid;
 
+    //para los timepos
+
+    private ImageView generate15min;
+    private ImageView generate30min;
+    private ImageView generate60min;
+    private ImageView generate3horas;
+
     //Referencing EditText placed inside in xml layout file
     EditText ChildrenName ;
 
     //para el dialog del nombe
 
     final Context c = this;
+
+    //para generar codigoi
+
+    private int Horas;
+    private int minutes;
+    private TextView Password;
 
 
     @Override
@@ -82,6 +98,45 @@ public class MainActivity extends AppCompatActivity {
         FotoYatomadakid1 = false;
         FotoYatomadakid2 = false;
         FotoYatomadakid3 = false;
+
+
+
+
+
+        //para los timepos en XMLÑ salen sin redeondear ?¿?¿
+
+
+        generate15min = (ImageView) findViewById(R.id.min15pass);
+        generate30min = (ImageView) findViewById(R.id.min30pass);
+        generate60min = (ImageView) findViewById(R.id.hora1pass);
+        generate3horas = (ImageView) findViewById(R.id.hora3pass);
+
+
+        //losponemos desde resources
+
+        generate15min.setImageResource(R.drawable.icon_15_minutes);
+        generate30min.setImageResource(R.drawable.icon_30_minutes);
+        generate60min.setImageResource(R.drawable.icon_45_minutes);
+        generate3horas.setImageResource(R.drawable.icon_3_horas);
+
+
+        //los animamos
+
+
+        final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce); // Use bounce interpolator with amplitude 0.2 and frequency 20
+        BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
+        myAnim.setInterpolator(interpolator);
+        generate15min.startAnimation(myAnim);
+        generate30min.startAnimation(myAnim);
+        generate60min.startAnimation(myAnim);
+        generate3horas.startAnimation(myAnim);
+
+
+
+        //para el passw
+
+
+        Password=(TextView)findViewById(R.id.secretCodetxt) ;
 
         //pongo 1 timer para que alos 2 seg cambie el icono de PADRE/HIJOpor la camera
 
@@ -135,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
                     FotoYatomadakid2 = true;
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inSampleSize = 4;
-                    Bitmap bitmap2=BitmapFactory.decodeFile(Fotokid1path,options);
+                    Bitmap bitmap2=BitmapFactory.decodeFile(Fotokid2path,options);
 
                     MiFotoHijo2.setImageBitmap(Bitmap.createScaledBitmap(bitmap2,200,200,true));
 
@@ -162,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
                     FotoYatomadakid3 = true;
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inSampleSize = 4;
-                    Bitmap bitmap2=BitmapFactory.decodeFile(Fotokid1path,options);
+                    Bitmap bitmap2=BitmapFactory.decodeFile(Fotokid3path,options);
 
                     MiFotoHijo3.setImageBitmap(Bitmap.createScaledBitmap(bitmap2,200,200,true));
 
@@ -516,5 +571,226 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void generar15minCode(View view) {
+
+        //1ºchequeamos que hay nombre elegido
+
+
+        if (ChildrenName.getText().toString().isEmpty() || ChildrenName.getText().toString().length() <4 || ChildrenName.getText().toString().length()>10) {
+
+        //no hay nombre o no esta bien
+            AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+            alertDialog.setTitle("Alert");
+            alertDialog.setMessage("You must insert a valid Kid Name");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+
+
+        }
+
+        else {
+        //noombre ok
+
+
+            //2º)lo creamos
+
+
+            Password.setText( generaNumeroClave("15min"));
+
+
+        }
+
+
+    }
+
+
+
+
+    public void generar30minCode(View view) {
+        //1ºchequeamos que hay nombre elegido
+
+
+        if (ChildrenName.getText().toString().isEmpty() || ChildrenName.getText().toString().length() <4 || ChildrenName.getText().toString().length()>10) {
+
+            //no hay nombre o no esta bien
+            AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+            alertDialog.setTitle("Alert");
+            alertDialog.setMessage("You must insert a valid Kid Name");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+
+
+        }
+
+        else {
+            //noombre ok
+
+
+            //2º)lo creamos
+
+
+            Password.setText( generaNumeroClave("30min"));
+
+
+        }
+
+
+    }
+
+
+
+    public void generar1HORACode(View view) {
+        //1ºchequeamos que hay nombre elegido
+
+
+        if (ChildrenName.getText().toString().isEmpty() || ChildrenName.getText().toString().length() <4 || ChildrenName.getText().toString().length()>10) {
+
+            //no hay nombre o no esta bien
+            AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+            alertDialog.setTitle("Alert");
+            alertDialog.setMessage("You must insert a valid Kid Name");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+
+
+        }
+
+        else {
+            //noombre ok
+
+
+            //2º)lo creamos
+
+
+            Password.setText( generaNumeroClave("1HORA"));
+
+
+        }
+
+
+
+    }
+
+
+    public void generar3HORASCode(View view) {
+
+        //1ºchequeamos que hay nombre elegido
+
+
+        if (ChildrenName.getText().toString().isEmpty() || ChildrenName.getText().toString().length() <4 || ChildrenName.getText().toString().length()>10) {
+
+            //no hay nombre o no esta bien
+            AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+            alertDialog.setTitle("Alert");
+            alertDialog.setMessage("You must insert a valid Kid Name");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+
+
+        }
+
+        else {
+            //noombre ok
+
+
+            //2º)lo creamos
+
+
+            Password.setText( generaNumeroClave("3HORAS"));
+
+
+        }
+
+
+    }
+
+
+    private String generaNumeroClave(String tiempo){
+
+        Calendar c = Calendar.getInstance();
+          Horas = c.get(Calendar.HOUR_OF_DAY);//formato 24h
+        minutes=c.get(Calendar.MINUTE);
+
+        String clave =String.format("%02d", Horas)+String.format("%02d", minutes);
+        Log.d("INFO","el numero secreto sin invertir es: "+ clave);
+
+        clave =new StringBuilder(clave).reverse().toString();
+        Log.d("INFO","el numero secreto YA INVERTIDO  es: "+ clave);
+
+        //vasmoa a acompañarlo del nombre
+
+        String NombreNino = ChildrenName.getText().toString();
+
+        //y del tiempo:
+
+        NombreNino=NombreNino+tiempo;
+
+        NombreNino.equalsIgnoreCase(NombreNino);
+
+        byte[] bytes = new byte[0];
+        try {
+            bytes = NombreNino.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            NombreNino = new String(bytes, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        int sumanombreniuno = 0;
+
+        for (int i : bytes)
+            sumanombreniuno += i;
+
+        //1º) le restamos al numero invertido 1000 si se puede si no se deja (minimo sera las 01:00-->10)
+        int numeroCalveFinalenInt=Integer.parseInt(clave);
+
+        if (numeroCalveFinalenInt>2000) {
+            numeroCalveFinalenInt=numeroCalveFinalenInt-1000;
+
+        }
+
+        //le sumamos el valor del nombre:
+        numeroCalveFinalenInt=numeroCalveFinalenInt+sumanombreniuno;
+
+        //lo convertimos en string
+
+        clave =String.valueOf(numeroCalveFinalenInt);
+
+        Log.d("INFO","el numero secreto YA INVERTIDO  Y codificado con la suma es: "+ clave);
+
+
+
+        //lo devolvemos
+
+        return clave;
+
+    }
+
+
 
 }
