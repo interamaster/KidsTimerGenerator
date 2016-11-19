@@ -1,17 +1,20 @@
 package com.mio.jrdv.kidstimergenerator;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -41,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
 
     //Referencing EditText placed inside in xml layout file
     EditText ChildrenName ;
+
+    //para el dialog del nombe
+
+    final Context c = this;
 
 
     @Override
@@ -87,14 +94,86 @@ public class MainActivity extends AppCompatActivity {
 
             public void onFinish() {
 
-                MiFotoHijo1.setImageResource(R.drawable.kids_icon);
 
-                //lo hacemos animado mejo!!
 
-                final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce); // Use bounce interpolator with amplitude 0.2 and frequency 20
-                BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
-                myAnim.setInterpolator(interpolator);
-                MiFotoHijo1.startAnimation(myAnim);
+                //1º)chequeamos si tenemos path de la foto guardada
+
+
+                String Fotokid1path = Myapplication.preferences.getString(Myapplication.PREF_FOTO_PATH_KID1,"NONE");//por defecto vale 0
+
+                if (!Fotokid1path.equals("NONE")){
+
+                    //si tiene foto
+                    FotoYatomadakid1 = true;
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inSampleSize = 4;
+                    Bitmap bitmap2=BitmapFactory.decodeFile(Fotokid1path,options);
+
+                    MiFotoHijo1.setImageBitmap(Bitmap.createScaledBitmap(bitmap2,200,200,true));
+
+                    //lo hacemos animado mejo!!
+
+                    final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce); // Use bounce interpolator with amplitude 0.2 and frequency 20
+                    BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
+                    myAnim.setInterpolator(interpolator);
+                    MiFotoHijo1.startAnimation(myAnim);
+
+                }
+
+
+                //IDEM KID2
+
+
+                //1º)chequeamos si tenemos path de la foto guardada
+
+
+                String Fotokid2path = Myapplication.preferences.getString(Myapplication.PREF_FOTO_PATH_KID2,"NONE");//por defecto vale 0
+
+                if (!Fotokid2path.equals("NONE")){
+
+                    //si tiene foto
+                    FotoYatomadakid2 = true;
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inSampleSize = 4;
+                    Bitmap bitmap2=BitmapFactory.decodeFile(Fotokid1path,options);
+
+                    MiFotoHijo2.setImageBitmap(Bitmap.createScaledBitmap(bitmap2,200,200,true));
+
+                    //lo hacemos animado mejo!!
+
+                    final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce); // Use bounce interpolator with amplitude 0.2 and frequency 20
+                    BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
+                    myAnim.setInterpolator(interpolator);
+                    MiFotoHijo2.startAnimation(myAnim);
+
+                }
+
+
+                //IDEM KID3
+
+                //1º)chequeamos si tenemos path de la foto guardada
+
+
+                String Fotokid3path = Myapplication.preferences.getString(Myapplication.PREF_FOTO_PATH_KID3,"NONE");//por defecto vale 0
+
+                if (!Fotokid3path.equals("NONE")){
+
+                    //si tiene foto
+                    FotoYatomadakid3 = true;
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inSampleSize = 4;
+                    Bitmap bitmap2=BitmapFactory.decodeFile(Fotokid1path,options);
+
+                    MiFotoHijo3.setImageBitmap(Bitmap.createScaledBitmap(bitmap2,200,200,true));
+
+                    //lo hacemos animado mejo!!
+
+                    final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce); // Use bounce interpolator with amplitude 0.2 and frequency 20
+                    BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
+                    myAnim.setInterpolator(interpolator);
+                    MiFotoHijo3.startAnimation(myAnim);
+
+                }
 
 
             }
@@ -115,20 +194,76 @@ public class MainActivity extends AppCompatActivity {
         if (!FotoYatomadakid1) {
 
 
-            Log.d("INFO", "tomando foto kid 1");
+            //1º dialog para nonbre
 
-            TAGCameraKid = "KID1";
+            LayoutInflater layoutInflaterAndroid = LayoutInflater.from(c);
+            View mView = layoutInflaterAndroid.inflate(R.layout.user_input_dialog_box, null);
+            AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(c);
+            alertDialogBuilderUserInput.setView(mView);
 
-            //  FotoYatomada=true;//no meor en el activityresult qeu asi seguro que si la tiene!!
-            //EasyImage.
-            EasyImage.openChooserWithGallery(this, "CHOOSE PICTURE", 0);
+
+            final EditText userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
+            alertDialogBuilderUserInput
+                    .setCancelable(false)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogBox, int id) {
+                            // ToDo get user input here
+
+                            //1º)chequeamos si el nombre si esta bien
+
+                            if (userInputDialogEditText.getText().toString().isEmpty() || userInputDialogEditText.getText().toString().length() <4 || userInputDialogEditText.getText().toString().length()>10){
+
+                                //esta mal el nombre
+                                dialogBox.cancel();
+                            }
+
+                            else {
+
+                                //1º)guaradmos el nombre
+
+                                Myapplication.preferences.edit().putString(Myapplication.PREF_NAME_KID1,userInputDialogEditText.getText().toString()).commit();
+                                //2º)la foto
+
+
+                                Log.d("INFO", "tomando foto kid 1");
+
+                                TAGCameraKid = "KID1";
+
+                                //  FotoYatomada=true;//no meor en el activityresult qeu asi seguro que si la tiene!!
+                                //EasyImage.
+                                EasyImage.openChooserWithGallery(MainActivity.this, "CHOOSE PICTURE", 0);
+                            }
+
+                        }
+                    })
+
+                    .setNegativeButton("Cancel",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialogBox, int id) {
+                                    dialogBox.cancel();
+                                }
+                            });
+
+            AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+            alertDialogAndroid.show();
+
+
+
 
         }
         else {
 
             //ya tine foto ponemos elm nombre ene l edittext
 
-            ChildrenName.setText("GUSTAVO");
+            //ChildrenName.setText("GUSTAVO");
+
+            //idem con pref
+
+            String kid1NMameFromPref = Myapplication.preferences.getString(Myapplication.PREF_NAME_KID1,"NONE");//por defecto vale 0
+
+            ChildrenName.setText(kid1NMameFromPref);
+
+
         }
 
 
@@ -138,19 +273,72 @@ public class MainActivity extends AppCompatActivity {
     public void TomarFotoHijo2(View view) {
 
         if (!FotoYatomadakid2) {
-            Log.d("INFO", "tomando foto kid 2");
+            //1º dialog para nonbre
 
-            TAGCameraKid = "KID2";
+            LayoutInflater layoutInflaterAndroid = LayoutInflater.from(c);
+            View mView = layoutInflaterAndroid.inflate(R.layout.user_input_dialog_box, null);
+            AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(c);
+            alertDialogBuilderUserInput.setView(mView);
 
-            //  FotoYatomada=true;//no meor en el activityresult qeu asi seguro que si la tiene!!
-            //EasyImage.
-            EasyImage.openChooserWithGallery(this, "CHOOSE PICTURE", 0);
+
+            final EditText userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
+            alertDialogBuilderUserInput
+                    .setCancelable(false)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogBox, int id) {
+                            // ToDo get user input here
+
+                            //1º)chequeamos si el nombre si esta bien
+
+                            if (userInputDialogEditText.getText().toString().isEmpty() || userInputDialogEditText.getText().toString().length() <4 || userInputDialogEditText.getText().toString().length()>10){
+
+                                //esta mal el nombre
+                                dialogBox.cancel();
+                            }
+
+                            else {
+
+                                //1º)guaradmos el nombre
+
+                                Myapplication.preferences.edit().putString(Myapplication.PREF_NAME_KID2,userInputDialogEditText.getText().toString()).commit();
+                                //2º)la foto
+
+
+                                Log.d("INFO", "tomando foto kid 2");
+
+                                TAGCameraKid = "KID2";
+
+                                //  FotoYatomada=true;//no meor en el activityresult qeu asi seguro que si la tiene!!
+                                //EasyImage.
+                                EasyImage.openChooserWithGallery(MainActivity.this, "CHOOSE PICTURE", 0);
+                            }
+
+                        }
+                    })
+
+                    .setNegativeButton("Cancel",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialogBox, int id) {
+                                    dialogBox.cancel();
+                                }
+                            });
+
+            AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+            alertDialogAndroid.show();
+
         }
         else {
 
             //ya tine foto ponemos elm nombre ene l edittext
 
-            ChildrenName.setText("INMA");
+           //ChildrenName.setText("INMA");
+
+            //idem con pref
+
+            String kid2NMameFromPref = Myapplication.preferences.getString(Myapplication.PREF_NAME_KID2,"NONE");//por defecto vale 0
+
+            ChildrenName.setText(kid2NMameFromPref);
+
         }
 
 
@@ -162,20 +350,69 @@ public class MainActivity extends AppCompatActivity {
 
         if (!FotoYatomadakid3) {
 
-        Log.d("INFO", "tomando foto kid 3");
+            //1º dialog para nonbre
 
-        TAGCameraKid="KID3";
+            LayoutInflater layoutInflaterAndroid = LayoutInflater.from(c);
+            View mView = layoutInflaterAndroid.inflate(R.layout.user_input_dialog_box, null);
+            AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(c);
+            alertDialogBuilderUserInput.setView(mView);
 
-        //  FotoYatomada=true;//no meor en el activityresult qeu asi seguro que si la tiene!!
-        //EasyImage.
-        EasyImage.openChooserWithGallery(this, "CHOOSE PICTURE", 0);}
+
+            final EditText userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
+            alertDialogBuilderUserInput
+                    .setCancelable(false)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogBox, int id) {
+                            // ToDo get user input here
+
+                            //1º)chequeamos si el nombre si esta bien
+
+                            if (userInputDialogEditText.getText().toString().isEmpty() || userInputDialogEditText.getText().toString().length() < 4 || userInputDialogEditText.getText().toString().length() > 10) {
+
+                                //esta mal el nombre
+                                dialogBox.cancel();
+                            } else {
+
+                                //1º)guaradmos el nombre
+
+                                Myapplication.preferences.edit().putString(Myapplication.PREF_NAME_KID3, userInputDialogEditText.getText().toString()).commit();
+                                //2º)la foto
 
 
+                                Log.d("INFO", "tomando foto kid 3");
+
+                                TAGCameraKid = "KID3";
+
+                                //  FotoYatomada=true;//no meor en el activityresult qeu asi seguro que si la tiene!!
+                                //EasyImage.
+                                EasyImage.openChooserWithGallery(MainActivity.this, "CHOOSE PICTURE", 0);
+                            }
+
+                        }
+                    })
+
+                    .setNegativeButton("Cancel",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialogBox, int id) {
+                                    dialogBox.cancel();
+                                }
+                            });
+
+            AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+            alertDialogAndroid.show();
+        }
         else {
 
             //ya tine foto ponemos elm nombre ene l edittext
 
-            ChildrenName.setText("NONAME");
+            //ChildrenName.setText("NONAME");
+
+            //idem con pref
+
+            String kid3NMameFromPref = Myapplication.preferences.getString(Myapplication.PREF_NAME_KID3,"NONE");//por defecto vale 0
+
+            ChildrenName.setText(kid3NMameFromPref);
+
         }
 
 
@@ -220,6 +457,10 @@ public class MainActivity extends AppCompatActivity {
                          //guardamos el path en nuestra property
                           FotoPathkid1 = (imageFiles.get(0).getPath());
                         FotoYatomadakid1 = true;
+                        //  guardamos el path en pref
+
+                        Myapplication.preferences.edit().putString(Myapplication.PREF_FOTO_PATH_KID1,FotoPathkid1).commit();
+
 
                         break;
 
@@ -229,6 +470,10 @@ public class MainActivity extends AppCompatActivity {
                         //guardamos el path en nuestra property
                         FotoPathkid2 = (imageFiles.get(0).getPath());
                         FotoYatomadakid2 = true;
+                        //  guardamos el path en pref
+
+                          Myapplication.preferences.edit().putString(Myapplication.PREF_FOTO_PATH_KID2,FotoPathkid2).commit();
+
 
                         break;
 
@@ -238,11 +483,22 @@ public class MainActivity extends AppCompatActivity {
                         //guardamos el path en nuestra property
                         FotoPathkid3 = (imageFiles.get(0).getPath());
                         FotoYatomadakid3 = true;
+                        //  guardamos el path en pref
+                        Myapplication.preferences.edit().putString(Myapplication.PREF_FOTO_PATH_KID3,FotoPathkid3).commit();
+
 
                         break;
 
 
                 }
+
+
+
+              //  guardamos el path en pref
+
+
+
+                Myapplication.preferences.edit().putString(Myapplication.PREF_FOTO_PATH_KID1,FotoPathkid1).commit();
 
 
 

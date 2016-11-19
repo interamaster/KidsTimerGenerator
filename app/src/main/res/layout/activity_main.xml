@@ -139,6 +139,7 @@
             android:background="@drawable/kids_icon"
             android:transitionName="Hijo3transition"
             android:onClick="TomarFotoHijo3"
+
            />
 
     </LinearLayout>
@@ -147,7 +148,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="1234"
+        android:text="----"
         android:textColor="#000000"
         android:textSize="120sp"
         android:id="@+id/secretCodetxt"
