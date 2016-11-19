@@ -582,7 +582,7 @@ public class MainActivity extends AppCompatActivity {
         //no hay nombre o no esta bien
             AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
             alertDialog.setTitle("Alert");
-            alertDialog.setMessage("You must insert a valid Kid Name");
+            alertDialog.setMessage("You must insert a valid Kid Name(or click picture if already inserted new kid)");
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
@@ -621,7 +621,7 @@ public class MainActivity extends AppCompatActivity {
             //no hay nombre o no esta bien
             AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
             alertDialog.setTitle("Alert");
-            alertDialog.setMessage("You must insert a valid Kid Name");
+            alertDialog.setMessage("You must insert a valid Kid Name(or click picture if already inserted new kid)");
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
@@ -659,7 +659,7 @@ public class MainActivity extends AppCompatActivity {
             //no hay nombre o no esta bien
             AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
             alertDialog.setTitle("Alert");
-            alertDialog.setMessage("You must insert a valid Kid Name");
+            alertDialog.setMessage("You must insert a valid Kid Name(or click picture if already inserted new kid)");
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
@@ -698,7 +698,7 @@ public class MainActivity extends AppCompatActivity {
             //no hay nombre o no esta bien
             AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
             alertDialog.setTitle("Alert");
-            alertDialog.setMessage("You must insert a valid Kid Name");
+            alertDialog.setMessage("You must insert a valid Kid Name(or click picture if already inserted new kid)");
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
