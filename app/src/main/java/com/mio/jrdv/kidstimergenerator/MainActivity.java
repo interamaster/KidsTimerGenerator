@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.ActionBar;
@@ -65,6 +66,10 @@ public class MainActivity extends AppCompatActivity {
     private int Horas;
     private int minutes;
     private TextView Password;
+
+
+    //para el sonido del CODIGO
+    private MediaPlayer mp;
 
 
     @Override
@@ -663,6 +668,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////GENERAR CODES/////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
     public void generar15minCode(View view) {
 
         //1ºchequeamos que hay nombre elegido
@@ -693,6 +704,15 @@ public class MainActivity extends AppCompatActivity {
 
 
             Password.setText( generaNumeroClave("15min"));
+
+            //Y LO ANIMAMOS
+
+            final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce); // Use bounce interpolator with amplitude 0.2 and frequency 20
+            BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
+            myAnim.setInterpolator(interpolator);
+            Password.startAnimation(myAnim);
+
+            SuenaalGenerar();
 
 
         }
@@ -732,6 +752,14 @@ public class MainActivity extends AppCompatActivity {
 
 
             Password.setText( generaNumeroClave("30min"));
+            //Y LO ANIMAMOS
+
+            final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce); // Use bounce interpolator with amplitude 0.2 and frequency 20
+            BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
+            myAnim.setInterpolator(interpolator);
+            Password.startAnimation(myAnim);
+
+            SuenaalGenerar();
 
 
         }
@@ -770,7 +798,15 @@ public class MainActivity extends AppCompatActivity {
 
 
             Password.setText( generaNumeroClave("1HORA"));
+            //Y LO ANIMAMOS
 
+            final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce); // Use bounce interpolator with amplitude 0.2 and frequency 20
+            BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
+            myAnim.setInterpolator(interpolator);
+            Password.startAnimation(myAnim);
+
+
+            SuenaalGenerar();
 
         }
 
@@ -809,13 +845,56 @@ public class MainActivity extends AppCompatActivity {
 
 
             Password.setText( generaNumeroClave("3HORAS"));
+            //Y LO ANIMAMOS
 
+            final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce); // Use bounce interpolator with amplitude 0.2 and frequency 20
+            BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
+            myAnim.setInterpolator(interpolator);
+            Password.startAnimation(myAnim);
+
+
+            SuenaalGenerar();
 
         }
 
 
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////SONIDOS///////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private void SuenaalGenerar() {
+
+        int sonidomp3 = getResourceID("musical002", "raw", getApplicationContext());
+        mp = MediaPlayer.create(MainActivity.this, sonidomp3);
+        mp.start();
+    }
+
+
+    protected final static int getResourceID (final String resName, final String resType, final Context ctx) {
+        final int ResourceID =  ctx.getResources().getIdentifier(resName, resType, ctx.getApplicationInfo().packageName);
+        if (ResourceID == 0) {
+
+
+
+            //en vez de una excepcion que lo ponga en el log solo
+
+            Log.e("INFO", "ojo no existe el resource: " + resName);
+            return 0;
+
+
+        } else {
+            return ResourceID;
+        }
+
+
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////GENERAR CODE///////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private String generaNumeroClave(String tiempo){
 
