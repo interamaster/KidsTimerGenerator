@@ -75,6 +75,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
+        //TODO QUITAR DEMO
+
+
+
+
+
+
+
+
+
+
+
+
+
         setContentView(R.layout.activity_main);
 
         //To hide AppBar for fullscreen.
@@ -860,6 +877,76 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    public void generarCASTIGOCODE(View view) {
+
+        //1ºchequeamos que hay nombre elegido
+
+
+        if (ChildrenName.getText().toString().isEmpty() || ChildrenName.getText().toString().length() <4 || ChildrenName.getText().toString().length()>10) {
+
+            //no hay nombre o no esta bien
+            AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+            alertDialog.setTitle("Alert");
+            alertDialog.setMessage("You must insert a valid Kid Name(or click picture if already inserted new kid)");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+
+
+        }
+
+        else {
+            //noombre ok
+
+            //no hay nombre o no esta bien
+
+            SuenaalGenerarCASTIGO();
+
+            AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+            alertDialog.setTitle("ATTENTION!!");
+            alertDialog.setMessage("This code will stop the device till tomorrow!!!(Or enter a extra time code)");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+
+                            if (mp!=null){
+                                //si no es null paramos elm sonido de castigo
+                                mp.stop();
+                            }
+                        }
+                    });
+            alertDialog.show();
+
+
+            //2º)lo creamos
+
+
+            Password.setText( generaNumeroClave("CASTIGO"));
+            //Y LO ANIMAMOS
+
+            final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce); // Use bounce interpolator with amplitude 0.2 and frequency 20
+            BounceInterpolator interpolator = new BounceInterpolator(0.2, 20);
+            myAnim.setInterpolator(interpolator);
+            Password.startAnimation(myAnim);
+
+
+
+
+        }
+
+
+
+    }
+
+
+
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////SONIDOS///////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -891,6 +978,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    private void SuenaalGenerarCASTIGO() {
+        int sonidomp3 = getResourceID("electronics001", "raw", getApplicationContext());
+        mp = MediaPlayer.create(MainActivity.this, sonidomp3);
+        mp.start();
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////GENERAR CODE///////////////////////////////////////////////////////////////////////
@@ -960,7 +1053,6 @@ public class MainActivity extends AppCompatActivity {
         return clave;
 
     }
-
 
 
 }
