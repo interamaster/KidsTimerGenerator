@@ -83,10 +83,48 @@ public class MainActivity extends AppCompatActivity {
         //para la foto:
 
         MiFotoHijo1 = (ImageView) findViewById(R.id.kidsreg1);
-
         MiFotoHijo2 = (ImageView) findViewById(R.id.kidsreg2);
         MiFotoHijo3 = (ImageView) findViewById(R.id.kidsreg3);
 
+        //AÑADIMO LISTENER PARA EL LONGCLICK:
+
+        MiFotoHijo1.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                FotoYatomadakid1=false;
+                TomarFotoHijo( v);
+
+
+                return false;
+            }
+        });
+
+
+
+        MiFotoHijo2.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                FotoYatomadakid2=false;
+                TomarFotoHijo( v);
+
+
+                return false;
+            }
+        });
+
+        MiFotoHijo3.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                FotoYatomadakid3=false;
+                TomarFotoHijo( v);
+
+
+                return false;
+            }
+        });
 
         EasyImage.configuration(this)
                 .setImagesFolderName("KidsTimer") //images folder name, default is "EasyImage"
@@ -304,7 +342,7 @@ public class MainActivity extends AppCompatActivity {
                                 TAGCameraKid = "KID1";
 
                                 //  FotoYatomada=true;//no meor en el activityresult qeu asi seguro que si la tiene!!
-                                //EasyImage.
+
                                 EasyImage.openChooserWithGallery(MainActivity.this, "CHOOSE PICTURE", 0);
                             }
 

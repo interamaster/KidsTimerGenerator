@@ -5,26 +5,33 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@android:color/white"
+
+    android:background="@drawable/fondo2"
+
     tools:context="com.mio.jrdv.kidstimergenerator.MainActivity">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:alpha="0.4"
+
+
+        />
 
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:ems="10"
         android:singleLine="true"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textColorHint="#cccccc"
         android:id="@+id/txtname_check_children"
         android:hint="Choose Kid or enter Kid Name"
         android:drawablePadding="10dp"
-        android:drawableLeft="@drawable/name_icon"
-        android:layout_marginTop="5dp"
+        android:drawableLeft="@drawable/kid_icon"
+        android:layout_marginTop="15dp"
         android:layout_weight="1"
         android:layout_below="@+id/linearLayout"
         android:layout_alignParentStart="true" />
@@ -47,7 +54,7 @@
             app:siBorderWidth="6dp"
             app:siBorderColor="@android:color/darker_gray"
             android:scaleType="fitXY"
-            android:background="@drawable/kids_icon"
+            android:background="@drawable/child_icon"
             android:transitionName="Hijo1transition"
             android:onClick="TomarFotoHijo"
             />
@@ -61,7 +68,7 @@
             app:siBorderWidth="6dp"
              app:siBorderColor="@android:color/darker_gray"
             android:scaleType="fitXY"
-            android:background="@drawable/kids_icon"
+            android:background="@drawable/astronaut_icon"
             android:transitionName="Hijo2transition"
             android:onClick="TomarFotoHijo2"
            />
@@ -74,7 +81,7 @@
             app:siBorderWidth="6dp"
             app:siBorderColor="@android:color/darker_gray"
             android:scaleType="fitXY"
-            android:background="@drawable/kids_icon"
+            android:background="@drawable/princess_icon"
             android:transitionName="Hijo3transition"
             android:onClick="TomarFotoHijo3"
 
@@ -87,7 +94,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="----"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textSize="120sp"
         android:id="@+id/secretCodetxt"
         android:gravity="center_horizontal"
@@ -101,7 +108,8 @@
         android:id="@+id/linearLayoutminutos"
         android:background="@android:color/transparent"
         android:layout_below="@+id/txtname_check_children"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true">
 
         <com.github.siyamed.shapeimageview.CircularImageView
             android:layout_width="0dp"
@@ -115,6 +123,7 @@
             android:background="@drawable/icon_15_minutes"
             android:transitionName="Hijotransition"
             android:onClick="generar15minCode"
+            android:longClickable="true"
             />
         <com.github.siyamed.shapeimageview.CircularImageView
             android:layout_width="0dp"
