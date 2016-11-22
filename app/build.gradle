@@ -33,4 +33,9 @@ dependencies {
 
     //para hacer/elegir foto
     compile 'com.github.jkwiecien:EasyImage:1.4.0'
+
+    //PARA LA INFO INICIAL
+
+    compile 'com.getkeepsafe.taptargetview:taptargetview:1.4.1'
+
 }

@@ -21,6 +21,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
+
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
@@ -72,6 +75,11 @@ public class MainActivity extends AppCompatActivity {
     private MediaPlayer mp;
 
 
+    //PARA LA INTRO HELP
+
+    TapTargetSequence sequence;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +105,89 @@ public class MainActivity extends AppCompatActivity {
         //To hide AppBar for fullscreen.
         ActionBar ab = getSupportActionBar();
         ab.hide();
+
+        ///////////////////////////////////////INTRO HELP/////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        sequence = new TapTargetSequence(this)
+                .targets(
+
+                        TapTarget.forView(findViewById(R.id.secretCodetxt),"EXTRA TIME CODE","Make sure your kid`s name is the same you generate the code, and also that your device and your kid's device have the same TIME(HOUR AND MINUTES)!!!. \n\nOnce generated you have to enter it on your kid's device in less than 30 secs!!(Don`t worry you can generate it again just clicking again))")
+                                .transparentTarget(true)
+                                .outerCircleColor(R.color.colorAccent),
+
+
+                        TapTarget.forView(findViewById(R.id.kidsreg1),"Enter your kid Name and picture","Make Sure the name is the same as introduced in KIDSTIMER FREE!!.This way you only have to click on the image to generate the code.Long Press to change!!")
+                                .outerCircleColor(R.color.color_blue)
+                                .targetCircleColor(R.color.color_negro)
+                                .titleTextColor(R.color.color_negro)
+                                .transparentTarget(true),
+                        TapTarget.forView(findViewById(R.id.hora1pass),"Generate EXTRA TIME CODES!!","After selecting Kid(or enter manually the name) click on the desired time to generate EXTRA TIME CODES!!.")
+                                .outerCircleColor(R.color.color_white)
+                                .targetCircleColor(R.color.colorPrimary)
+                                .titleTextColor(R.color.color_negro),
+                        TapTarget.forView(findViewById(R.id.txtname_check_children),"Enter kid Name","Enter your kid Name manually."),
+                        TapTarget.forView(findViewById(R.id.angry_btn),"GAME OVER","This CODE will disable till midnight your kid's device(unless you enter a new EXTRA TIME CODE.)")
+                                .transparentTarget(true)
+                                .outerCircleColor(R.color.colorAccent)
+
+                ).listener(new TapTargetSequence.Listener() {
+                    @Override
+                    public void onSequenceFinish() {
+
+                       // editor.putBoolean("finished",true);
+                       // editor.commit();
+                        //idem con mi class:
+                   // Myapplication.preferences.edit().putString(Myapplication.PREF_NAME_KID1,userInputDialogEditText.getText().toString()).commit();
+
+                        Myapplication.preferences.edit().putBoolean("finished",true).commit();
+                        //2º)la foto
+
+
+                    }
+
+                    @Override
+                    public void onSequenceCanceled() {
+
+                      //  editor.putBoolean("finished",true);
+                       // editor.commit();
+                        //idem con mi class:
+                        Myapplication.preferences.edit().putBoolean("finished",true).commit();
+                    }
+                });
+
+       // boolean isSequenceFinished = sharedPref.getBoolean("finished",false);
+
+        //idem con mi class:
+        // String Fotokid1path = Myapplication.preferences.getString(Myapplication.PREF_FOTO_PATH_KID1,"NONE");//por defecto vale 0
+        boolean isSequenceFinished = Myapplication.preferences.getBoolean("finished",false);//por defecto vale 0
+
+
+        if(!isSequenceFinished) {//TODO poner a !isSequenceFinished para funcionamineto normal
+
+            sequence.start();
+
+        }
+
+
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
 
         //Referencing EditText widgets and Button placed inside in xml layout file
         ChildrenName = (EditText) findViewById(R.id.txtname_check_children);
@@ -328,6 +419,8 @@ public class MainActivity extends AppCompatActivity {
         if (!FotoYatomadakid1) {
 
 
+            /*
+
             //1º dialog para nonbre
 
             LayoutInflater layoutInflaterAndroid = LayoutInflater.from(c);
@@ -348,7 +441,10 @@ public class MainActivity extends AppCompatActivity {
                             if (userInputDialogEditText.getText().toString().isEmpty() || userInputDialogEditText.getText().toString().length() <4 || userInputDialogEditText.getText().toString().length()>10){
 
                                 //esta mal el nombre
-                                dialogBox.cancel();
+                               // dialogBox.cancel();
+
+                                //en vez de cancel mejor le avisamos:
+                                userInputDialogEditText.setError("min 4 and max 8 characteres");
                             }
 
                             else {
@@ -381,9 +477,87 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
             alertDialogAndroid.show();
 
+            */
 
 
+            //forma 2 para que si al darle OK no esta bien no te eche fuera:
 
+
+            LayoutInflater layoutInflaterAndroid = LayoutInflater.from(c);
+            View mView = layoutInflaterAndroid.inflate(R.layout.user_input_dialog_box, null);
+            AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(c);
+            alertDialogBuilderUserInput.setView(mView);
+
+
+            final EditText userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
+            alertDialogBuilderUserInput
+                    .setCancelable(false)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogBox, int id) {
+
+                            //Do nothing here because we override this button later to change the close behaviour.
+                            //However, we still need this because on older versions of Android unless we
+                            //pass a handler the button doesn't get instantiated
+
+                        }
+                        })
+
+                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialogBox, int id) {
+                                dialogBox.cancel();
+                            }
+                        });
+
+
+            final AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+            alertDialogAndroid.show();
+
+            //Overriding the handler immediately after show is probably a better approach than OnShowListener as described below
+            alertDialogAndroid.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    Boolean wantToCloseDialog = false;
+                    //Do stuff, possibly set wantToCloseDialog to true then...
+
+
+                    //1º)chequeamos si el nombre si esta bien
+
+                    if (userInputDialogEditText.getText().toString().isEmpty() || userInputDialogEditText.getText().toString().length() <4 || userInputDialogEditText.getText().toString().length()>8){
+
+                        //esta mal el nombre
+                        // dialogBox.cancel();
+
+                        //en vez de cancel mejor le avisamos:
+                        userInputDialogEditText.setError("min 4 and max 8 characteres");
+                    }
+
+                    else {
+
+                        //1º)guaradmos el nombre
+
+                        Myapplication.preferences.edit().putString(Myapplication.PREF_NAME_KID1,userInputDialogEditText.getText().toString()).commit();
+                        //2º)la foto
+
+
+                        Log.d("INFO", "tomando foto kid 1");
+
+                        TAGCameraKid = "KID1";
+
+                        //  FotoYatomada=true;//no meor en el activityresult qeu asi seguro que si la tiene!!
+
+                        EasyImage.openChooserWithGallery(MainActivity.this, "CHOOSE PICTURE", 0);
+
+                        //ponemos a true para que se cierre:
+                        wantToCloseDialog=true;
+                    }
+
+                    if(wantToCloseDialog)
+                        alertDialogAndroid.dismiss();
+                    //else dialog stays open. Make sure you have an obvious way to close the dialog especially if you set cancellable to false.
+                }
+            });
         }
         else {
 
@@ -409,6 +583,7 @@ public class MainActivity extends AppCompatActivity {
         if (!FotoYatomadakid2) {
             //1º dialog para nonbre
 
+
             LayoutInflater layoutInflaterAndroid = LayoutInflater.from(c);
             View mView = layoutInflaterAndroid.inflate(R.layout.user_input_dialog_box, null);
             AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(c);
@@ -420,47 +595,78 @@ public class MainActivity extends AppCompatActivity {
                     .setCancelable(false)
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialogBox, int id) {
-                            // ToDo get user input here
 
-                            //1º)chequeamos si el nombre si esta bien
-
-                            if (userInputDialogEditText.getText().toString().isEmpty() || userInputDialogEditText.getText().toString().length() <4 || userInputDialogEditText.getText().toString().length()>10){
-
-                                //esta mal el nombre
-                                dialogBox.cancel();
-                            }
-
-                            else {
-
-                                //1º)guaradmos el nombre
-
-                                Myapplication.preferences.edit().putString(Myapplication.PREF_NAME_KID2,userInputDialogEditText.getText().toString()).commit();
-                                //2º)la foto
-
-
-                                Log.d("INFO", "tomando foto kid 2");
-
-                                TAGCameraKid = "KID2";
-
-                                //  FotoYatomada=true;//no meor en el activityresult qeu asi seguro que si la tiene!!
-                                //EasyImage.
-                                EasyImage.openChooserWithGallery(MainActivity.this, "CHOOSE PICTURE", 0);
-                            }
+                            //Do nothing here because we override this button later to change the close behaviour.
+                            //However, we still need this because on older versions of Android unless we
+                            //pass a handler the button doesn't get instantiated
 
                         }
                     })
 
-                    .setNegativeButton("Cancel",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialogBox, int id) {
-                                    dialogBox.cancel();
-                                }
-                            });
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogBox, int id) {
+                            dialogBox.cancel();
+                        }
+                    });
 
-            AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+
+            final AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
             alertDialogAndroid.show();
 
+            //Overriding the handler immediately after show is probably a better approach than OnShowListener as described below
+            alertDialogAndroid.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    Boolean wantToCloseDialog = false;
+                    //Do stuff, possibly set wantToCloseDialog to true then...
+
+
+                    //1º)chequeamos si el nombre si esta bien
+
+                    if (userInputDialogEditText.getText().toString().isEmpty() || userInputDialogEditText.getText().toString().length() <4 || userInputDialogEditText.getText().toString().length()>8){
+
+                        //esta mal el nombre
+                        // dialogBox.cancel();
+
+                        //en vez de cancel mejor le avisamos:
+                        userInputDialogEditText.setError("min 4 and max 8 characteres");
+                    }
+
+                    else {
+
+                        //1º)guaradmos el nombre
+
+                        Myapplication.preferences.edit().putString(Myapplication.PREF_NAME_KID2,userInputDialogEditText.getText().toString()).commit();
+                        //2º)la foto
+
+
+                        Log.d("INFO", "tomando foto kid 2");
+
+                        TAGCameraKid = "KID2";
+
+                        //  FotoYatomada=true;//no meor en el activityresult qeu asi seguro que si la tiene!!
+
+                        EasyImage.openChooserWithGallery(MainActivity.this, "CHOOSE PICTURE", 0);
+
+                        //ponemos a true para que se cierre:
+                        wantToCloseDialog=true;
+                    }
+
+                    if(wantToCloseDialog)
+                        alertDialogAndroid.dismiss();
+                    //else dialog stays open. Make sure you have an obvious way to close the dialog especially if you set cancellable to false.
+                }
+            });
+
+
         }
+
+
+
+
+
         else {
 
             //ya tine foto ponemos elm nombre ene l edittext
@@ -486,6 +692,7 @@ public class MainActivity extends AppCompatActivity {
 
             //1º dialog para nonbre
 
+
             LayoutInflater layoutInflaterAndroid = LayoutInflater.from(c);
             View mView = layoutInflaterAndroid.inflate(R.layout.user_input_dialog_box, null);
             AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(c);
@@ -497,44 +704,73 @@ public class MainActivity extends AppCompatActivity {
                     .setCancelable(false)
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialogBox, int id) {
-                            // ToDo get user input here
 
-                            //1º)chequeamos si el nombre si esta bien
-
-                            if (userInputDialogEditText.getText().toString().isEmpty() || userInputDialogEditText.getText().toString().length() < 4 || userInputDialogEditText.getText().toString().length() > 10) {
-
-                                //esta mal el nombre
-                                dialogBox.cancel();
-                            } else {
-
-                                //1º)guaradmos el nombre
-
-                                Myapplication.preferences.edit().putString(Myapplication.PREF_NAME_KID3, userInputDialogEditText.getText().toString()).commit();
-                                //2º)la foto
-
-
-                                Log.d("INFO", "tomando foto kid 3");
-
-                                TAGCameraKid = "KID3";
-
-                                //  FotoYatomada=true;//no meor en el activityresult qeu asi seguro que si la tiene!!
-                                //EasyImage.
-                                EasyImage.openChooserWithGallery(MainActivity.this, "CHOOSE PICTURE", 0);
-                            }
+                            //Do nothing here because we override this button later to change the close behaviour.
+                            //However, we still need this because on older versions of Android unless we
+                            //pass a handler the button doesn't get instantiated
 
                         }
                     })
 
-                    .setNegativeButton("Cancel",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialogBox, int id) {
-                                    dialogBox.cancel();
-                                }
-                            });
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogBox, int id) {
+                            dialogBox.cancel();
+                        }
+                    });
 
-            AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+
+            final AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
             alertDialogAndroid.show();
-        }
+
+            //Overriding the handler immediately after show is probably a better approach than OnShowListener as described below
+            alertDialogAndroid.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    Boolean wantToCloseDialog = false;
+                    //Do stuff, possibly set wantToCloseDialog to true then...
+
+
+                    //1º)chequeamos si el nombre si esta bien
+
+                    if (userInputDialogEditText.getText().toString().isEmpty() || userInputDialogEditText.getText().toString().length() <4 || userInputDialogEditText.getText().toString().length()>8){
+
+                        //esta mal el nombre
+                        // dialogBox.cancel();
+
+                        //en vez de cancel mejor le avisamos:
+                        userInputDialogEditText.setError("min 4 and max 8 characteres");
+                    }
+
+                    else {
+
+                        //1º)guaradmos el nombre
+
+                        Myapplication.preferences.edit().putString(Myapplication.PREF_NAME_KID3,userInputDialogEditText.getText().toString()).commit();
+                        //2º)la foto
+
+
+                        Log.d("INFO", "tomando foto kid 3");
+
+                        TAGCameraKid = "KID3";
+
+                        //  FotoYatomada=true;//no meor en el activityresult qeu asi seguro que si la tiene!!
+
+                        EasyImage.openChooserWithGallery(MainActivity.this, "CHOOSE PICTURE", 0);
+
+                        //ponemos a true para que se cierre:
+                        wantToCloseDialog=true;
+                    }
+
+                    if(wantToCloseDialog)
+                        alertDialogAndroid.dismiss();
+                    //else dialog stays open. Make sure you have an obvious way to close the dialog especially if you set cancellable to false.
+                }
+            });
+
+
+    }
         else {
 
             //ya tine foto ponemos elm nombre ene l edittext
@@ -710,6 +946,8 @@ public class MainActivity extends AppCompatActivity {
                     });
             alertDialog.show();
 
+            ChildrenName.setError("min 4 and max 8 characteres");
+
 
         }
 
@@ -759,6 +997,7 @@ public class MainActivity extends AppCompatActivity {
             alertDialog.show();
 
 
+            ChildrenName.setError("min 4 and max 8 characteres");
         }
 
         else {
@@ -804,6 +1043,7 @@ public class MainActivity extends AppCompatActivity {
                     });
             alertDialog.show();
 
+            ChildrenName.setError("min 4 and max 8 characteres");
 
         }
 
@@ -852,6 +1092,7 @@ public class MainActivity extends AppCompatActivity {
             alertDialog.show();
 
 
+            ChildrenName.setError("min 4 and max 8 characteres");
         }
 
         else {
@@ -898,6 +1139,7 @@ public class MainActivity extends AppCompatActivity {
             alertDialog.show();
 
 
+            ChildrenName.setError("min 4 and max 8 characteres");
         }
 
         else {
@@ -1048,6 +1290,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        if (numeroCalveFinalenInt<1000) {
+            //si es menor de 1000 que le ponga un cero a la izqda
+
+            clave="0"+clave;
+
+
+        }
         //lo devolvemos
 
         return clave;
