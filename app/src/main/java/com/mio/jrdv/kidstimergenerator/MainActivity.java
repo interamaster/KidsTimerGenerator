@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
         boolean isSequenceFinished = Myapplication.preferences.getBoolean("finished",false);//por defecto vale 0
 
 
-        if(isSequenceFinished) {//TODO poner a !isSequenceFinished para funcionamineto normal
+        if(!isSequenceFinished) {//TODO poner a !isSequenceFinished para funcionamineto normal
 
             sequence.start();
 
