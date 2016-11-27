@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">Kids Timer Generator</string>
+
+    <string name="info1titu">EXTRA TIME CODE  </string>
+    <string name="info1">Make sure your kid\`s name is the same you generate the code, and also that your device and your kid\'s device have the same TIME(HOUR AND MINUTES)!!!. \n\nOnce generated you have to enter it on your kid\'s device in less than 30 secs!!(Don\`t worry you can generate it again just clicking again))</string>
+
+
+    <string name="info2titu">Enter your kid Name and picture </string>
+    <string name="info2"> Make Sure the name is the same as introduced in KIDSTIMER FREE!!.This way you only have to click on the image to generate the code.Long Press to change!!</string>
+
+
+
+    <string name="info3titu">Generate EXTRA TIME CODES!!</string>
+    <string name="info3"> After selecting Kid(or enter manually the name) click on the desired time to generate EXTRA TIME CODES!!.</string>
+
+
+    <string name="info4titu">Enter kid Name</string>
+    <string name="info4"> Enter your kid Name manually.</string>
+
+    <string name="info5titu">GAME OVER</string>
+    <string name="info5"> This CODE will disable till midnight your kid\'s device(unless you enter a new EXTRA TIME CODE.)</string>
+
+
+
 </resources>

@@ -113,22 +113,37 @@ public class MainActivity extends AppCompatActivity {
         sequence = new TapTargetSequence(this)
                 .targets(
 
-                        TapTarget.forView(findViewById(R.id.secretCodetxt),"EXTRA TIME CODE","Make sure your kid`s name is the same you generate the code, and also that your device and your kid's device have the same TIME(HOUR AND MINUTES)!!!. \n\nOnce generated you have to enter it on your kid's device in less than 30 secs!!(Don`t worry you can generate it again just clicking again))")
+                        //TapTarget.forView(findViewById(R.id.secretCodetxt),"EXTRA TIME CODE","Make sure your kid`s name is the same you generate the code, and also that your device and your kid's device have the same TIME(HOUR AND MINUTES)!!!. \n\nOnce generated you have to enter it on your kid's device in less than 30 secs!!(Don`t worry you can generate it again just clicking again))")
+
+                        TapTarget.forView(findViewById(R.id.secretCodetxt),getString(R.string.info1titu),getString(R.string.info1))
+
                                 .transparentTarget(true)
                                 .outerCircleColor(R.color.colorAccent),
 
 
-                        TapTarget.forView(findViewById(R.id.kidsreg1),"Enter your kid Name and picture","Make Sure the name is the same as introduced in KIDSTIMER FREE!!.This way you only have to click on the image to generate the code.Long Press to change!!")
+                      //  TapTarget.forView(findViewById(R.id.kidsreg1),"Enter your kid Name and picture","Make Sure the name is the same as introduced in KIDSTIMER FREE!!.This way you only have to click on the image to generate the code.Long Press to change!!")
+
+
+                        TapTarget.forView(findViewById(R.id.kidsreg1),getString(R.string.info2titu),getString(R.string.info2))
                                 .outerCircleColor(R.color.color_blue)
                                 .targetCircleColor(R.color.color_negro)
                                 .titleTextColor(R.color.color_negro)
                                 .transparentTarget(true),
-                        TapTarget.forView(findViewById(R.id.hora1pass),"Generate EXTRA TIME CODES!!","After selecting Kid(or enter manually the name) click on the desired time to generate EXTRA TIME CODES!!.")
+
+                        //TapTarget.forView(findViewById(R.id.hora1pass),"Generate EXTRA TIME CODES!!","After selecting Kid(or enter manually the name) click on the desired time to generate EXTRA TIME CODES!!.")
+
+                        TapTarget.forView(findViewById(R.id.hora1pass),getString(R.string.info3titu),getString(R.string.info3))
                                 .outerCircleColor(R.color.color_white)
                                 .targetCircleColor(R.color.colorPrimary)
                                 .titleTextColor(R.color.color_negro),
-                        TapTarget.forView(findViewById(R.id.txtname_check_children),"Enter kid Name","Enter your kid Name manually."),
-                        TapTarget.forView(findViewById(R.id.angry_btn),"GAME OVER","This CODE will disable till midnight your kid's device(unless you enter a new EXTRA TIME CODE.)")
+
+                       // TapTarget.forView(findViewById(R.id.txtname_check_children),"Enter kid Name","Enter your kid Name manually."),
+
+                        TapTarget.forView(findViewById(R.id.txtname_check_children),getString(R.string.info4titu),getString(R.string.info4)),
+
+                        //TapTarget.forView(findViewById(R.id.angry_btn),"GAME OVER","This CODE will disable till midnight your kid's device(unless you enter a new EXTRA TIME CODE.)")
+
+                        TapTarget.forView(findViewById(R.id.angry_btn),getString(R.string.info5titu),getString(R.string.info5))
                                 .transparentTarget(true)
                                 .outerCircleColor(R.color.colorAccent)
 
@@ -164,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
         boolean isSequenceFinished = Myapplication.preferences.getBoolean("finished",false);//por defecto vale 0
 
 
-        if(!isSequenceFinished) {//TODO poner a !isSequenceFinished para funcionamineto normal
+        if(isSequenceFinished) {//TODO poner a !isSequenceFinished para funcionamineto normal
 
             sequence.start();
 

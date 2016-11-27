@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="info1titu">EXTRA TIME CODE  </string>
+    <string name="info1">Asegurate que el nombre que usas es el del artista en cuestión,  y también que la hora de tu dispositivo y el del artista coiniciden (Hora y minuto)!!!. \n\nUna vez que se genere tienes 30 segs para ponerlo!!(Tranquilo puedes gnerar otro si vuelves a pulsar))</string>
+
+
+    <string name="info2titu">Entra el Nombre y la Foto del artista</string>
+    <string name="info2">Asegurate que el nombre coincide con el que pusistes en KIDSTIMER FREE!!.Así sólo tendras que pulsar en la imagen para generar el codigo.Deja pulsado para cambiar imagen o nombre</string>
+
+
+
+    <string name="info3titu">Genera EXTRA TIME CODES!!</string>
+    <string name="info3"> Despue de elegir el artista con la foto(o haberlo metido a mano) pulsa en el icono deseado para obtener los correspondientes  EXTRA TIME CODES!!.</string>
+
+
+    <string name="info4titu">Pon el nombre del Artista</string>
+    <string name="info4"> Ponlo manualmente.</string>
+
+    <string name="info5titu">GAME OVER</string>
+    <string name="info5"> Este CODE hara que la tablet/móvil del artista no se pueda usar hasta medianoche (a menos que metas otro EXTRA TIME CODE.)</string>
+
+
+
+</resources>
