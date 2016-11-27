@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="app_name">Kids Timer Generator</string>
+
     <string name="info1titu">EXTRA TIME CODE  </string>
     <string name="info1">Asegurate que el nombre que usas es el del artista en cuestión,  y también que la hora de tu dispositivo y el del artista coiniciden (Hora y minuto)!!!. \n\nUna vez que se genere tienes 30 segs para ponerlo!!(Tranquilo puedes gnerar otro si vuelves a pulsar))</string>
 
