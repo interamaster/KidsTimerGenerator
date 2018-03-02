@@ -34,6 +34,8 @@ import pl.aprilapps.easyphotopicker.EasyImage;
 
 public class MainActivity extends AppCompatActivity {
 
+    //v101 cambiada version para poder resubir a google play tras haberla despublicado
+
     //para las fotos de los ninos:
 
     private ImageView MiFotoHijo1;
